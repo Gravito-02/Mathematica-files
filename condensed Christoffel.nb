@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[    202102,       6373]
-NotebookOptionsPosition[    194472,       6260]
-NotebookOutlinePosition[    194967,       6278]
-CellTagsIndexPosition[    194924,       6275]
+NotebookDataLength[    203229,       6397]
+NotebookOptionsPosition[    195501,       6283]
+NotebookOutlinePosition[    195996,       6301]
+CellTagsIndexPosition[    195953,       6298]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -6256,7 +6256,30 @@ Cell[BoxData[
 Cell[BoxData[""], "Input",
  CellChangeTimes->{{3.9028102579482193`*^9, 
   3.902810288117025*^9}},ExpressionUUID->"8079f057-2ee1-4e41-8242-\
-1c9749ca5e7d"]
+1c9749ca5e7d"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", 
+   RowBox[{"Now", " ", "you", " ", "got", " ", "the", " ", "Ricci", " ", 
+    RowBox[{"tensor", "!!"}], " ", "now", " ", "the", " ", "goal", " ", "is", 
+    " ", "to", " ", "define", " ", "energy", " ", "momentum", " ", "tensor", 
+    " ", "and", " ", "equate", " ", "those", " ", "with", " ", "the", " ", 
+    "Ricci", " ", "Such", " ", "that", " ", 
+    RowBox[{"you", "'"}], "ll", " ", "get", " ", "the", " ", "first", " ", 
+    "ordered", " ", "term", " ", "for", " ", "the", " ", "metric", " ", 
+    "tensor"}], "*)"}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{"Goal", " ", 
+     RowBox[{"is", " ", "::"}]}], ":", "  ", 
+    RowBox[{
+    "Using", " ", "the", " ", "the", " ", "metric", " ", "tensor", " ", "get",
+      " ", "the", " ", "1", "PN", " ", "Lagrangian"}]}], " ", 
+   "*)"}]}]], "Input",
+ CellChangeTimes->{{3.9028104605780697`*^9, 
+  3.9028106169143944`*^9}},ExpressionUUID->"d0aa2053-f550-4448-bc46-\
+7a4bfacc4978"]
 },
 WindowSize->{1018, 1021},
 WindowMargins->{{Automatic, -12}, {Automatic, 18}},
@@ -6374,7 +6397,8 @@ Cell[CellGroupData[{
 Cell[143796, 4571, 231, 4, 28, "Input",ExpressionUUID->"ef9b039e-2614-423f-8b8f-a897cec4d88b"],
 Cell[144030, 4577, 50269, 1675, 246, "Output",ExpressionUUID->"1da70a62-cc5e-445b-8d88-fc6a32aa2257"]
 }, Open  ]],
-Cell[194314, 6255, 154, 3, 28, "Input",ExpressionUUID->"8079f057-2ee1-4e41-8242-1c9749ca5e7d"]
+Cell[194314, 6255, 154, 3, 28, "Input",ExpressionUUID->"8079f057-2ee1-4e41-8242-1c9749ca5e7d"],
+Cell[194471, 6260, 1026, 21, 86, "Input",ExpressionUUID->"d0aa2053-f550-4448-bc46-7a4bfacc4978"]
 }
 ]
 *)
