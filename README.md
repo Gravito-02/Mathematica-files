@@ -5,4 +5,4 @@ To get the nth order PN expansion for Lagrangian by using xAct package(xTensor, 
 
 @ChristoffelSymbols(using xAct) is for 1PN christoffel till epsilon^4 
 @RicciTensor(using xAct) is for 1PN Ricci Tensor till epsilon^4
->> Condensed Christoffel.nb is the notebook calculating the Christoffel in a efficient manner
+>> Condensed Christoffel.nb is the notebook calculating the Christoffel in an efficient manner. And the Ricci Tensor up to an order of epsilon to power 5.
