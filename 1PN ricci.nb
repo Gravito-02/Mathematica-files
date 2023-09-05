@@ -1,0 +1,3010 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 12.1' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     95203,       3002]
+NotebookOptionsPosition[     93231,       2971]
+NotebookOutlinePosition[     93630,       2987]
+CellTagsIndexPosition[     93587,       2984]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", "   ", 
+   RowBox[{
+    RowBox[{"Well", " ", "written"}], ",", " ", 
+    RowBox[{
+    "how", " ", "to", " ", "get", " ", "christoffel", " ", "symboles", " ", 
+     "and", " ", "how", " ", "to", " ", "truncate", " ", "it"}]}], "   ", 
+   "*)"}], "\[IndentingNewLine]"}]], "Input",ExpressionUUID->"f205344b-670b-\
+4a58-9f7f-2f98d54e3ab1"],
+
+Cell[BoxData[{
+ RowBox[{"<<", "xAct`xTensor`"}], "\[IndentingNewLine]", 
+ RowBox[{"<<", "xAct`xCoba`"}]}], "Input",ExpressionUUID->"03347d24-f0e0-4d7e-\
+866c-6d7e0dc550c2"],
+
+Cell[BoxData[{
+ RowBox[{"DefManifold", "[", 
+  RowBox[{"M", ",", "4", ",", 
+   RowBox[{"{", 
+    RowBox[{"a", ",", "b", ",", "c", ",", "d", ",", "e"}], "}"}]}], 
+  "]"}], "\[IndentingNewLine]", 
+ RowBox[{"DefChart", "[", 
+  RowBox[{"ch", ",", "M", ",", 
+   RowBox[{"{", 
+    RowBox[{"0", ",", "1", ",", "2", ",", "3"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"t", "[", "]"}], ",", 
+     RowBox[{"x", "[", "]"}], ",", 
+     RowBox[{"y", "[", "]"}], ",", 
+     RowBox[{"z", "[", "]"}]}], "}"}], ",", 
+   RowBox[{"ChartColor", "\[Rule]", "Brown"}], ",", 
+   RowBox[{"FormatBasis", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{"\"\<Partials\>\"", ",", "\"\<Differentials\>\""}], "}"}]}]}], 
+  "]"}]}], "Input",ExpressionUUID->"b6edb1df-dbd9-4eac-866c-fa594ea6d1d8"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"DefConstantSymbol", "[", "G", "]"}], ";"}], 
+  RowBox[{"(*", 
+   RowBox[{"Gravitational", " ", "Constant"}], 
+   "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"DefConstantSymbol", "[", "m", "]"}], ";"}], 
+  RowBox[{"(*", 
+   RowBox[{"mass", " ", "of", " ", "particle"}], 
+   "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"DefConstantSymbol", "[", "\[Epsilon]", "]"}], ";", 
+  RowBox[{"(*", 
+   RowBox[{"expansion", " ", "parameter"}], "*)"}]}]}], "Input",
+ CellChangeTimes->{{3.902870226020852*^9, 
+  3.9028702285716095`*^9}},ExpressionUUID->"7975606c-30a6-4983-9d6c-\
+810f5832c700"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{"Now", " ", 
+    RowBox[{"it", "'"}], "ll", " ", "be", " ", "defined", " ", "as", " ", "a",
+     " ", "scalar", " ", "function", " ", "with", " ", "some", " ", "scalar", 
+    " ", "field", " ", "as", " ", 
+    RowBox[{"htt", "[", 
+     RowBox[{
+      RowBox[{"t", "[", "]"}], ",", 
+      RowBox[{"x", "[", "]"}], ",", 
+      RowBox[{"y", "[", "]"}], ",", 
+      RowBox[{"z", "[", "]"}]}], "]"}]}], "  ", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"DefScalarFunction", "[", "htt", "]"}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"DefScalarFunction", "[", "hxx", "]"}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"DefScalarFunction", "[", "hyy", "]"}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"DefScalarFunction", "[", "hzz", "]"}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"DefScalarFunction", "[", "htx", "]"}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"DefScalarFunction", "[", "hxt", "]"}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"DefScalarFunction", "[", "hty", "]"}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"DefScalarFunction", "[", "hyt", "]"}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"DefScalarFunction", "[", "hzt", "]"}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"DefScalarFunction", "[", "htz", "]"}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"DefScalarFunction", "[", "htt4", "]"}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"DefConstantSymbol", "[", "\[Epsilon]", "]"}], ";"}]}]}]], "Input",
+ CellChangeTimes->{{3.9028702425922265`*^9, 
+  3.9028702478269*^9}},ExpressionUUID->"f7b57fab-9519-466c-8d80-0cfb53941a42"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", 
+   RowBox[{
+   "Defining", " ", "the", " ", "1", "st", " ", "order", " ", "metric", " ", 
+    "tensor"}], "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"met", "=", " ", 
+     RowBox[{"CTensor", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"-", "1"}], "+", 
+            RowBox[{
+             SuperscriptBox["\[Epsilon]", "2"], 
+             RowBox[{"htt", "[", 
+              RowBox[{
+               RowBox[{"t", "[", "]"}], ",", 
+               RowBox[{"x", "[", "]"}], ",", 
+               RowBox[{"y", "[", "]"}], ",", 
+               RowBox[{"z", "[", "]"}]}], "]"}]}], "+", 
+            RowBox[{
+             SuperscriptBox["\[Epsilon]", "4"], 
+             RowBox[{"htt4", "[", 
+              RowBox[{
+               RowBox[{"t", "[", "]"}], ",", 
+               RowBox[{"x", "[", "]"}], ",", 
+               RowBox[{"y", "[", "]"}], ",", 
+               RowBox[{"z", "[", "]"}]}], "]"}]}]}], ",", 
+           RowBox[{
+            SuperscriptBox["\[Epsilon]", "3"], 
+            RowBox[{"htx", "[", 
+             RowBox[{
+              RowBox[{"t", "[", "]"}], ",", 
+              RowBox[{"x", "[", "]"}], ",", 
+              RowBox[{"y", "[", "]"}], ",", 
+              RowBox[{"z", "[", "]"}]}], "]"}]}], ",", 
+           RowBox[{
+            SuperscriptBox["\[Epsilon]", "3"], 
+            RowBox[{"hty", "[", 
+             RowBox[{
+              RowBox[{"t", "[", "]"}], ",", 
+              RowBox[{"x", "[", "]"}], ",", 
+              RowBox[{"y", "[", "]"}], ",", 
+              RowBox[{"z", "[", "]"}]}], "]"}]}], ",", 
+           RowBox[{
+            SuperscriptBox["\[Epsilon]", "3"], 
+            RowBox[{"htz", "[", 
+             RowBox[{
+              RowBox[{"t", "[", "]"}], ",", 
+              RowBox[{"x", "[", "]"}], ",", 
+              RowBox[{"y", "[", "]"}], ",", 
+              RowBox[{"z", "[", "]"}]}], "]"}]}]}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{
+            SuperscriptBox["\[Epsilon]", "3"], 
+            RowBox[{"htx", "[", 
+             RowBox[{
+              RowBox[{"t", "[", "]"}], ",", 
+              RowBox[{"x", "[", "]"}], ",", 
+              RowBox[{"y", "[", "]"}], ",", 
+              RowBox[{"z", "[", "]"}]}], "]"}]}], ",", 
+           RowBox[{"1", "+", 
+            RowBox[{
+             SuperscriptBox["\[Epsilon]", "2"], 
+             RowBox[{"hxx", "[", 
+              RowBox[{
+               RowBox[{"t", "[", "]"}], ",", 
+               RowBox[{"x", "[", "]"}], ",", 
+               RowBox[{"y", "[", "]"}], ",", 
+               RowBox[{"z", "[", "]"}]}], "]"}]}]}], ",", "0", ",", "0"}], 
+          "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{
+            SuperscriptBox["\[Epsilon]", "3"], 
+            RowBox[{"hty", "[", 
+             RowBox[{
+              RowBox[{"t", "[", "]"}], ",", 
+              RowBox[{"x", "[", "]"}], ",", 
+              RowBox[{"y", "[", "]"}], ",", 
+              RowBox[{"z", "[", "]"}]}], "]"}]}], ",", "0", ",", 
+           RowBox[{"1", "+", 
+            RowBox[{
+             SuperscriptBox["\[Epsilon]", "2"], 
+             RowBox[{"hyy", "[", 
+              RowBox[{
+               RowBox[{"t", "[", "]"}], ",", 
+               RowBox[{"x", "[", "]"}], ",", 
+               RowBox[{"y", "[", "]"}], ",", 
+               RowBox[{"z", "[", "]"}]}], "]"}]}]}], ",", "0"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{
+            SuperscriptBox["\[Epsilon]", "3"], 
+            RowBox[{"htz", "[", 
+             RowBox[{
+              RowBox[{"t", "[", "]"}], ",", 
+              RowBox[{"x", "[", "]"}], ",", 
+              RowBox[{"y", "[", "]"}], ",", 
+              RowBox[{"z", "[", "]"}]}], "]"}]}], ",", "0", ",", "0", ",", 
+           RowBox[{"1", "+", 
+            RowBox[{
+             SuperscriptBox["\[Epsilon]", "2"], 
+             RowBox[{"hzz", "[", 
+              RowBox[{
+               RowBox[{"t", "[", "]"}], ",", 
+               RowBox[{"x", "[", "]"}], ",", 
+               RowBox[{"y", "[", "]"}], ",", 
+               RowBox[{"z", "[", "]"}]}], "]"}]}]}]}], "}"}]}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"-", "ch"}], ",", 
+         RowBox[{"-", "ch"}]}], "}"}]}], "]"}]}], ";"}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+    "SetCMetric", " ", "as", " ", "is", " ", "used", " ", "to", " ", "make", 
+     " ", "met", " ", "identify", " ", "as", " ", "a", " ", "matrix"}], 
+    "*)"}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"SetCMetric", "[", 
+     RowBox[{"met", ",", "ch", ",", 
+      RowBox[{"SignatureOfMetric", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"3", ",", "1", ",", "0"}], "}"}]}]}], "]"}], ";", " ", 
+    RowBox[{"(*", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"Argument", " ", 
+        RowBox[{"{", 
+         RowBox[{"3", ",", "1", ",", "0"}], "}"}], " ", "are", " ", "used", 
+        " ", "for", " ", "3"}], " ", "+", "ve"}], ",", " ", 
+      RowBox[{"1", " ", "-", "ve"}], ",", " ", 
+      RowBox[{"0", " ", 
+       RowBox[{"zero", "'"}], "s"}]}], "*)"}], "\[IndentingNewLine]", 
+    RowBox[{"met", "[", 
+     RowBox[{
+      RowBox[{"-", "a"}], ",", 
+      RowBox[{"-", "b"}]}], "]"}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"met", "[", 
+     RowBox[{"a", ",", "b"}], "]"}], ";", 
+    RowBox[{"(*", 
+     RowBox[{"inverse", " ", "Metric"}], "*)"}], "\[IndentingNewLine]", 
+    RowBox[{"CD", "=", 
+     RowBox[{"CovDOfMetric", "[", "met", "]"}]}], ";", 
+    RowBox[{"(*", 
+     RowBox[{"Defining", " ", "Covariant", " ", "derivativee"}], "*)"}], 
+    "\[IndentingNewLine]", 
+    RowBox[{"christoffel", "=", 
+     RowBox[{"Christoffel", "[", 
+      RowBox[{"CD", ",", "PDch"}], "]"}]}], ";", 
+    RowBox[{"(*", 
+     RowBox[{"Defining", " ", "Christoffel"}], "*)"}], "\[IndentingNewLine]", 
+    RowBox[{"c000", "=", 
+     RowBox[{"christoffel", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"0", ",", "ch"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", 
+         RowBox[{"-", "ch"}]}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", 
+         RowBox[{"-", "ch"}]}], "}"}]}], "]"}]}], ";", 
+    RowBox[{"(*", 
+     RowBox[{
+     "Way", " ", "to", " ", "get", " ", "individual", " ", "components"}], 
+     "*)"}], "\[IndentingNewLine]"}]}]}]], "Input",
+ CellChangeTimes->{{3.9028702619484253`*^9, 
+  3.902870262181403*^9}},ExpressionUUID->"9eb89d42-8f46-44b5-8e72-\
+5004f105a5a9"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", 
+   RowBox[{
+   "Setting", " ", "up", " ", "the", " ", "replacements", " ", "required", 
+    " ", "while", " ", "differentiating", " ", "with", " ", "respect", " ", 
+    "to", " ", 
+    RowBox[{"t", "[", "]"}]}], "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"SetOfReplacements", "=", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"D", "[", 
+         RowBox[{
+          RowBox[{"hxx", "[", 
+           RowBox[{
+            RowBox[{"t", "[", "]"}], ",", 
+            RowBox[{"x", "[", "]"}], ",", 
+            RowBox[{"y", "[", "]"}], ",", 
+            RowBox[{"z", "[", "]"}]}], "]"}], ",", 
+          RowBox[{"t", "[", "]"}]}], "]"}], "\[Rule]", 
+        RowBox[{"\[Epsilon]", " ", 
+         RowBox[{"D", "[", 
+          RowBox[{
+           RowBox[{"hxx", "[", 
+            RowBox[{
+             RowBox[{"t", "[", "]"}], ",", 
+             RowBox[{"x", "[", "]"}], ",", 
+             RowBox[{"y", "[", "]"}], ",", 
+             RowBox[{"z", "[", "]"}]}], "]"}], ",", 
+           RowBox[{"t", "[", "]"}]}], "]"}]}]}], ",", 
+       RowBox[{
+        RowBox[{"D", "[", 
+         RowBox[{
+          RowBox[{"hyy", "[", 
+           RowBox[{
+            RowBox[{"t", "[", "]"}], ",", 
+            RowBox[{"x", "[", "]"}], ",", 
+            RowBox[{"y", "[", "]"}], ",", 
+            RowBox[{"z", "[", "]"}]}], "]"}], ",", 
+          RowBox[{"t", "[", "]"}]}], "]"}], "\[Rule]", 
+        RowBox[{"\[Epsilon]", " ", 
+         RowBox[{"D", "[", 
+          RowBox[{
+           RowBox[{"hyy", "[", 
+            RowBox[{
+             RowBox[{"t", "[", "]"}], ",", 
+             RowBox[{"x", "[", "]"}], ",", 
+             RowBox[{"y", "[", "]"}], ",", 
+             RowBox[{"z", "[", "]"}]}], "]"}], ",", 
+           RowBox[{"t", "[", "]"}]}], "]"}]}]}], ",", 
+       RowBox[{
+        RowBox[{"D", "[", 
+         RowBox[{
+          RowBox[{"hzz", "[", 
+           RowBox[{
+            RowBox[{"t", "[", "]"}], ",", 
+            RowBox[{"x", "[", "]"}], ",", 
+            RowBox[{"y", "[", "]"}], ",", 
+            RowBox[{"z", "[", "]"}]}], "]"}], ",", 
+          RowBox[{"t", "[", "]"}]}], "]"}], "\[Rule]", 
+        RowBox[{"\[Epsilon]", " ", 
+         RowBox[{"D", "[", 
+          RowBox[{
+           RowBox[{"hzz", "[", 
+            RowBox[{
+             RowBox[{"t", "[", "]"}], ",", 
+             RowBox[{"x", "[", "]"}], ",", 
+             RowBox[{"y", "[", "]"}], ",", 
+             RowBox[{"z", "[", "]"}]}], "]"}], ",", 
+           RowBox[{"t", "[", "]"}]}], "]"}]}]}], ",", 
+       RowBox[{
+        RowBox[{"D", "[", 
+         RowBox[{
+          RowBox[{"htx", "[", 
+           RowBox[{
+            RowBox[{"t", "[", "]"}], ",", 
+            RowBox[{"x", "[", "]"}], ",", 
+            RowBox[{"y", "[", "]"}], ",", 
+            RowBox[{"z", "[", "]"}]}], "]"}], ",", 
+          RowBox[{"t", "[", "]"}]}], "]"}], "\[Rule]", 
+        RowBox[{"\[Epsilon]", " ", 
+         RowBox[{"D", "[", 
+          RowBox[{
+           RowBox[{"htx", "[", 
+            RowBox[{
+             RowBox[{"t", "[", "]"}], ",", 
+             RowBox[{"x", "[", "]"}], ",", 
+             RowBox[{"y", "[", "]"}], ",", 
+             RowBox[{"z", "[", "]"}]}], "]"}], ",", 
+           RowBox[{"t", "[", "]"}]}], "]"}]}]}], ",", 
+       RowBox[{
+        RowBox[{"D", "[", 
+         RowBox[{
+          RowBox[{"hty", "[", 
+           RowBox[{
+            RowBox[{"t", "[", "]"}], ",", 
+            RowBox[{"x", "[", "]"}], ",", 
+            RowBox[{"y", "[", "]"}], ",", 
+            RowBox[{"z", "[", "]"}]}], "]"}], ",", 
+          RowBox[{"t", "[", "]"}]}], "]"}], "\[Rule]", 
+        RowBox[{"\[Epsilon]", " ", 
+         RowBox[{"D", "[", 
+          RowBox[{
+           RowBox[{"hty", "[", 
+            RowBox[{
+             RowBox[{"t", "[", "]"}], ",", 
+             RowBox[{"x", "[", "]"}], ",", 
+             RowBox[{"y", "[", "]"}], ",", 
+             RowBox[{"z", "[", "]"}]}], "]"}], ",", 
+           RowBox[{"t", "[", "]"}]}], "]"}]}]}], ",", 
+       RowBox[{
+        RowBox[{"D", "[", 
+         RowBox[{
+          RowBox[{"htz", "[", 
+           RowBox[{
+            RowBox[{"t", "[", "]"}], ",", 
+            RowBox[{"x", "[", "]"}], ",", 
+            RowBox[{"y", "[", "]"}], ",", 
+            RowBox[{"z", "[", "]"}]}], "]"}], ",", 
+          RowBox[{"t", "[", "]"}]}], "]"}], "\[Rule]", 
+        RowBox[{"\[Epsilon]", " ", 
+         RowBox[{"D", "[", 
+          RowBox[{
+           RowBox[{"htz", "[", 
+            RowBox[{
+             RowBox[{"t", "[", "]"}], ",", 
+             RowBox[{"x", "[", "]"}], ",", 
+             RowBox[{"y", "[", "]"}], ",", 
+             RowBox[{"z", "[", "]"}]}], "]"}], ",", 
+           RowBox[{"t", "[", "]"}]}], "]"}]}]}]}], "}"}]}], ";"}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"SetOf2Replacement", "=", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"D", "[", 
+         RowBox[{
+          RowBox[{"D", "[", 
+           RowBox[{
+            RowBox[{"hxx", "[", 
+             RowBox[{
+              RowBox[{"t", "[", "]"}], ",", 
+              RowBox[{"x", "[", "]"}], ",", 
+              RowBox[{"y", "[", "]"}], ",", 
+              RowBox[{"z", "[", "]"}]}], "]"}], ",", 
+            RowBox[{"t", "[", "]"}]}], "]"}], ",", 
+          RowBox[{"t", "[", "]"}]}], "]"}], "\[Rule]", 
+        RowBox[{"\[Epsilon]", " ", 
+         RowBox[{"D", "[", 
+          RowBox[{
+           RowBox[{"D", "[", 
+            RowBox[{
+             RowBox[{"hxx", "[", 
+              RowBox[{
+               RowBox[{"t", "[", "]"}], ",", 
+               RowBox[{"x", "[", "]"}], ",", 
+               RowBox[{"y", "[", "]"}], ",", 
+               RowBox[{"z", "[", "]"}]}], "]"}], ",", 
+             RowBox[{"t", "[", "]"}]}], "]"}], ",", 
+           RowBox[{"t", "[", "]"}]}], "]"}]}]}], ",", 
+       RowBox[{
+        RowBox[{"D", "[", 
+         RowBox[{
+          RowBox[{"D", "[", 
+           RowBox[{
+            RowBox[{"hyy", "[", 
+             RowBox[{
+              RowBox[{"t", "[", "]"}], ",", 
+              RowBox[{"x", "[", "]"}], ",", 
+              RowBox[{"y", "[", "]"}], ",", 
+              RowBox[{"z", "[", "]"}]}], "]"}], ",", 
+            RowBox[{"t", "[", "]"}]}], "]"}], ",", 
+          RowBox[{"t", "[", "]"}]}], "]"}], "\[Rule]", 
+        RowBox[{"\[Epsilon]", " ", 
+         RowBox[{"D", "[", 
+          RowBox[{
+           RowBox[{"D", "[", 
+            RowBox[{
+             RowBox[{"hyy", "[", 
+              RowBox[{
+               RowBox[{"t", "[", "]"}], ",", 
+               RowBox[{"x", "[", "]"}], ",", 
+               RowBox[{"y", "[", "]"}], ",", 
+               RowBox[{"z", "[", "]"}]}], "]"}], ",", 
+             RowBox[{"t", "[", "]"}]}], "]"}], ",", 
+           RowBox[{"t", "[", "]"}]}], "]"}]}]}], ",", 
+       RowBox[{
+        RowBox[{"D", "[", 
+         RowBox[{
+          RowBox[{"D", "[", 
+           RowBox[{
+            RowBox[{"hzz", "[", 
+             RowBox[{
+              RowBox[{"t", "[", "]"}], ",", 
+              RowBox[{"x", "[", "]"}], ",", 
+              RowBox[{"y", "[", "]"}], ",", 
+              RowBox[{"z", "[", "]"}]}], "]"}], ",", 
+            RowBox[{"t", "[", "]"}]}], "]"}], ",", 
+          RowBox[{"t", "[", "]"}]}], "]"}], "\[Rule]", 
+        RowBox[{"\[Epsilon]", " ", 
+         RowBox[{"D", "[", 
+          RowBox[{
+           RowBox[{"D", "[", 
+            RowBox[{
+             RowBox[{"hzz", "[", 
+              RowBox[{
+               RowBox[{"t", "[", "]"}], ",", 
+               RowBox[{"x", "[", "]"}], ",", 
+               RowBox[{"y", "[", "]"}], ",", 
+               RowBox[{"z", "[", "]"}]}], "]"}], ",", 
+             RowBox[{"t", "[", "]"}]}], "]"}], ",", 
+           RowBox[{"t", "[", "]"}]}], "]"}]}]}], ",", 
+       RowBox[{
+        RowBox[{"D", "[", 
+         RowBox[{
+          RowBox[{"D", "[", 
+           RowBox[{
+            RowBox[{"htx", "[", 
+             RowBox[{
+              RowBox[{"t", "[", "]"}], ",", 
+              RowBox[{"x", "[", "]"}], ",", 
+              RowBox[{"y", "[", "]"}], ",", 
+              RowBox[{"z", "[", "]"}]}], "]"}], ",", 
+            RowBox[{"t", "[", "]"}]}], "]"}], ",", 
+          RowBox[{"t", "[", "]"}]}], "]"}], "\[Rule]", 
+        RowBox[{"\[Epsilon]", " ", 
+         RowBox[{"D", "[", 
+          RowBox[{
+           RowBox[{"D", "[", 
+            RowBox[{
+             RowBox[{"htx", "[", 
+              RowBox[{
+               RowBox[{"t", "[", "]"}], ",", 
+               RowBox[{"x", "[", "]"}], ",", 
+               RowBox[{"y", "[", "]"}], ",", 
+               RowBox[{"z", "[", "]"}]}], "]"}], ",", 
+             RowBox[{"t", "[", "]"}]}], "]"}], ",", 
+           RowBox[{"t", "[", "]"}]}], "]"}]}]}], ",", 
+       RowBox[{
+        RowBox[{"D", "[", 
+         RowBox[{
+          RowBox[{"D", "[", 
+           RowBox[{
+            RowBox[{"hty", "[", 
+             RowBox[{
+              RowBox[{"t", "[", "]"}], ",", 
+              RowBox[{"x", "[", "]"}], ",", 
+              RowBox[{"y", "[", "]"}], ",", 
+              RowBox[{"z", "[", "]"}]}], "]"}], ",", 
+            RowBox[{"t", "[", "]"}]}], "]"}], ",", 
+          RowBox[{"t", "[", "]"}]}], "]"}], "\[Rule]", 
+        RowBox[{"\[Epsilon]", " ", 
+         RowBox[{"D", "[", 
+          RowBox[{
+           RowBox[{"D", "[", 
+            RowBox[{
+             RowBox[{"hty", "[", 
+              RowBox[{
+               RowBox[{"t", "[", "]"}], ",", 
+               RowBox[{"x", "[", "]"}], ",", 
+               RowBox[{"y", "[", "]"}], ",", 
+               RowBox[{"z", "[", "]"}]}], "]"}], ",", 
+             RowBox[{"t", "[", "]"}]}], "]"}], ",", 
+           RowBox[{"t", "[", "]"}]}], "]"}]}]}], ",", "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"D", "[", 
+         RowBox[{
+          RowBox[{"D", "[", 
+           RowBox[{
+            RowBox[{"htz", "[", 
+             RowBox[{
+              RowBox[{"t", "[", "]"}], ",", 
+              RowBox[{"x", "[", "]"}], ",", 
+              RowBox[{"y", "[", "]"}], ",", 
+              RowBox[{"z", "[", "]"}]}], "]"}], ",", 
+            RowBox[{"t", "[", "]"}]}], "]"}], ",", 
+          RowBox[{"t", "[", "]"}]}], "]"}], "\[Rule]", 
+        RowBox[{"\[Epsilon]", " ", 
+         RowBox[{"D", "[", 
+          RowBox[{
+           RowBox[{"D", "[", 
+            RowBox[{
+             RowBox[{"htz", "[", 
+              RowBox[{
+               RowBox[{"t", "[", "]"}], ",", 
+               RowBox[{"x", "[", "]"}], ",", 
+               RowBox[{"y", "[", "]"}], ",", 
+               RowBox[{"z", "[", "]"}]}], "]"}], ",", 
+             RowBox[{"t", "[", "]"}]}], "]"}], ",", 
+           RowBox[{"t", "[", "]"}]}], "]"}]}]}]}], "}"}]}], 
+    ";"}]}]}]], "Input",ExpressionUUID->"59634685-9ea2-4b67-a013-\
+88ffabfd5666"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{"Defining", " ", "Christoffel"}], " ", "*)"}], 
+  "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"Christill4th", "=", 
+     RowBox[{
+      RowBox[{"Series", "[", 
+       RowBox[{
+        RowBox[{"Table", "[", 
+         RowBox[{
+          RowBox[{"christoffel", "[", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{"i", ",", "ch"}], "}"}], ",", 
+            RowBox[{"{", 
+             RowBox[{"j", ",", 
+              RowBox[{"-", "ch"}]}], "}"}], ",", 
+            RowBox[{"{", 
+             RowBox[{"k", ",", 
+              RowBox[{"-", "ch"}]}], "}"}]}], "]"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"i", ",", "0", ",", "3"}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"j", ",", "0", ",", "3"}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"k", ",", "0", ",", "3"}], "}"}]}], "]"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"\[Epsilon]", ",", "0", ",", "4"}], "}"}]}], "]"}], "//", 
+      "Normal"}]}], ";"}], "\[IndentingNewLine]"}]}]], "Input",
+ CellChangeTimes->{{3.9028702748012705`*^9, 
+  3.902870294089716*^9}},ExpressionUUID->"4e591327-5f32-4ae8-bd7e-\
+c3ae1e0de715"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"\[CapitalGamma]", "[", 
+    RowBox[{"i_", ",", "j_", ",", "k_"}], "]"}], ":=", 
+   RowBox[{"Series", "[", 
+    RowBox[{
+     RowBox[{"christoffel", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"i", ",", "ch"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"j", ",", 
+         RowBox[{"-", "ch"}]}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"k", ",", 
+         RowBox[{"-", "ch"}]}], "}"}]}], "]"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\[Epsilon]", ",", "0", ",", "5"}], "}"}]}], "]"}]}], 
+  ";"}]], "Input",ExpressionUUID->"0595e0c1-43b7-462e-9fa6-899d9a8eae8f"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"ff", "[", "k_", "]"}], ":=", 
+   RowBox[{"Piecewise", "[", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"t", "[", "]"}], ",", 
+        RowBox[{"k", "\[Equal]", "0"}]}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"x", "[", "]"}], ",", 
+        RowBox[{"k", "\[Equal]", "1"}]}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"y", "[", "]"}], ",", 
+        RowBox[{"k", "\[Equal]", "2"}]}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"z", "[", "]"}], ",", 
+        RowBox[{"k", "\[Equal]", "3"}]}], "}"}]}], "}"}], "]"}]}], 
+  ";"}]], "Input",ExpressionUUID->"4a76031c-f942-4135-b7a4-ce5d8dce1d3d"],
+
+Cell[BoxData[
+ RowBox[{"(*", 
+  RowBox[{
+  "Series", " ", "is", " ", "a", " ", "method", " ", "to", " ", "truncate", 
+   " ", "the", " ", "function", " ", "till", " ", "the", " ", "nth", " ", 
+   RowBox[{"order", ".", " ", "Here"}], " ", "we", " ", "are", " ", "writing",
+    " ", "in", " ", "the", " ", "tabular", " ", "formate"}], "*)"}]], "Input",\
+ExpressionUUID->"30169dce-eb77-4a6d-a949-a3cc64c1ff2f"],
+
+Cell[BoxData[
+ RowBox[{"(*", 
+  RowBox[{
+  "We", " ", "can", " ", "use", " ", "coefficient", " ", "function", " ", 
+   "over", " ", "series", " ", "funtion", " ", "to", " ", "get", " ", "the", 
+   " ", "desire", " ", "coefficients", " ", "about", " ", "nth", " ", "order",
+    " ", "parameter"}], "*)"}]], "Input",ExpressionUUID->"05af00fa-f31d-424c-\
+81c7-1abc2462ab87"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", 
+   RowBox[{
+    RowBox[{
+    "This", " ", "CalRicci", " ", "will", " ", "just", " ", "work", " ", 
+     "for", " ", "1", "PN", " ", "as", " ", "we", " ", "are", " ", "not", " ",
+      "considering", " ", "\[CapitalGamma]\[CapitalGamma]", " ", "term", " ", 
+     "that", " ", "is", " ", "any", " ", "term", " ", "of", " ", "order"}], 
+    " ", "+", 
+    RowBox[{"4", " ", "of", " ", "\[Epsilon]"}]}], " ", "*)"}], 
+  "\[IndentingNewLine]", 
+  RowBox[{"(*", 
+   RowBox[{
+    RowBox[{"Considering", " ", "CalRicci"}], "=", " ", 
+    RowBox[{
+     RowBox[{
+      SubscriptBox["\[PartialD]", "\[Placeholder]"], " ", "\[CapitalGamma]"}],
+      " ", "-", 
+     RowBox[{
+      SubscriptBox["\[PartialD]", "\[Placeholder]"], " ", 
+      "\[CapitalGamma]"}]}]}], "*)"}]}]], "Input",ExpressionUUID->"3152bb0d-\
+a13e-4fc3-9fbd-1ccea4a74696"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"CalRicci", "[", 
+    RowBox[{"i_", ",", "j_"}], "]"}], ":=", " ", 
+   RowBox[{
+    RowBox[{"Sum", "[", 
+     RowBox[{
+      RowBox[{"D", "[", 
+       RowBox[{
+        RowBox[{"\[CapitalGamma]", "[", 
+         RowBox[{"k", ",", "i", ",", "j"}], "]"}], ",", 
+        RowBox[{"ff", "[", "k", "]"}]}], "]"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"k", ",", "0", ",", "3"}], "}"}]}], "]"}], "-", 
+    RowBox[{"Sum", "[", 
+     RowBox[{
+      RowBox[{"D", "[", 
+       RowBox[{
+        RowBox[{"\[CapitalGamma]", "[", 
+         RowBox[{"k", ",", "k", ",", "i"}], "]"}], ",", 
+        RowBox[{"ff", "[", "j", "]"}]}], "]"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"k", ",", "0", ",", "3"}], "}"}]}], "]"}]}]}], ";"}]], "Input",\
+ExpressionUUID->"50ba3353-0217-49af-a227-c0a318e6a403"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"ReplacementReq", "=", " ", "\[IndentingNewLine]", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"D", "[", 
+       RowBox[{
+        RowBox[{"hxx", "[", 
+         RowBox[{
+          RowBox[{"t", "[", "]"}], ",", 
+          RowBox[{"x", "[", "]"}], ",", 
+          RowBox[{"y", "[", "]"}], ",", 
+          RowBox[{"z", "[", "]"}]}], "]"}], ",", 
+        RowBox[{"t", "[", "]"}]}], "]"}], "\[Rule]", 
+      RowBox[{"\[Epsilon]", " ", 
+       RowBox[{"D", "[", 
+        RowBox[{
+         RowBox[{"hxx", "[", 
+          RowBox[{
+           RowBox[{"t", "[", "]"}], ",", 
+           RowBox[{"x", "[", "]"}], ",", 
+           RowBox[{"y", "[", "]"}], ",", 
+           RowBox[{"z", "[", "]"}]}], "]"}], ",", 
+         RowBox[{"t", "[", "]"}]}], "]"}]}]}], ",", 
+     RowBox[{
+      RowBox[{"D", "[", 
+       RowBox[{
+        RowBox[{"hyy", "[", 
+         RowBox[{
+          RowBox[{"t", "[", "]"}], ",", 
+          RowBox[{"x", "[", "]"}], ",", 
+          RowBox[{"y", "[", "]"}], ",", 
+          RowBox[{"z", "[", "]"}]}], "]"}], ",", 
+        RowBox[{"t", "[", "]"}]}], "]"}], "\[Rule]", 
+      RowBox[{"\[Epsilon]", " ", 
+       RowBox[{"D", "[", 
+        RowBox[{
+         RowBox[{"hyy", "[", 
+          RowBox[{
+           RowBox[{"t", "[", "]"}], ",", 
+           RowBox[{"x", "[", "]"}], ",", 
+           RowBox[{"y", "[", "]"}], ",", 
+           RowBox[{"z", "[", "]"}]}], "]"}], ",", 
+         RowBox[{"t", "[", "]"}]}], "]"}]}]}], ",", 
+     RowBox[{
+      RowBox[{"D", "[", 
+       RowBox[{
+        RowBox[{"hzz", "[", 
+         RowBox[{
+          RowBox[{"t", "[", "]"}], ",", 
+          RowBox[{"x", "[", "]"}], ",", 
+          RowBox[{"y", "[", "]"}], ",", 
+          RowBox[{"z", "[", "]"}]}], "]"}], ",", 
+        RowBox[{"t", "[", "]"}]}], "]"}], "\[Rule]", 
+      RowBox[{"\[Epsilon]", " ", 
+       RowBox[{"D", "[", 
+        RowBox[{
+         RowBox[{"hzz", "[", 
+          RowBox[{
+           RowBox[{"t", "[", "]"}], ",", 
+           RowBox[{"x", "[", "]"}], ",", 
+           RowBox[{"y", "[", "]"}], ",", 
+           RowBox[{"z", "[", "]"}]}], "]"}], ",", 
+         RowBox[{"t", "[", "]"}]}], "]"}]}]}], ",", 
+     RowBox[{
+      RowBox[{"D", "[", 
+       RowBox[{
+        RowBox[{"htx", "[", 
+         RowBox[{
+          RowBox[{"t", "[", "]"}], ",", 
+          RowBox[{"x", "[", "]"}], ",", 
+          RowBox[{"y", "[", "]"}], ",", 
+          RowBox[{"z", "[", "]"}]}], "]"}], ",", 
+        RowBox[{"t", "[", "]"}]}], "]"}], "\[Rule]", 
+      RowBox[{"\[Epsilon]", " ", 
+       RowBox[{"D", "[", 
+        RowBox[{
+         RowBox[{"htx", "[", 
+          RowBox[{
+           RowBox[{"t", "[", "]"}], ",", 
+           RowBox[{"x", "[", "]"}], ",", 
+           RowBox[{"y", "[", "]"}], ",", 
+           RowBox[{"z", "[", "]"}]}], "]"}], ",", 
+         RowBox[{"t", "[", "]"}]}], "]"}]}]}], ",", 
+     RowBox[{
+      RowBox[{"D", "[", 
+       RowBox[{
+        RowBox[{"hty", "[", 
+         RowBox[{
+          RowBox[{"t", "[", "]"}], ",", 
+          RowBox[{"x", "[", "]"}], ",", 
+          RowBox[{"y", "[", "]"}], ",", 
+          RowBox[{"z", "[", "]"}]}], "]"}], ",", 
+        RowBox[{"t", "[", "]"}]}], "]"}], "\[Rule]", 
+      RowBox[{"\[Epsilon]", " ", 
+       RowBox[{"D", "[", 
+        RowBox[{
+         RowBox[{"hty", "[", 
+          RowBox[{
+           RowBox[{"t", "[", "]"}], ",", 
+           RowBox[{"x", "[", "]"}], ",", 
+           RowBox[{"y", "[", "]"}], ",", 
+           RowBox[{"z", "[", "]"}]}], "]"}], ",", 
+         RowBox[{"t", "[", "]"}]}], "]"}]}]}], ",", 
+     RowBox[{
+      RowBox[{"D", "[", 
+       RowBox[{
+        RowBox[{"htz", "[", 
+         RowBox[{
+          RowBox[{"t", "[", "]"}], ",", 
+          RowBox[{"x", "[", "]"}], ",", 
+          RowBox[{"y", "[", "]"}], ",", 
+          RowBox[{"z", "[", "]"}]}], "]"}], ",", 
+        RowBox[{"t", "[", "]"}]}], "]"}], "\[Rule]", 
+      RowBox[{"\[Epsilon]", " ", 
+       RowBox[{"D", "[", 
+        RowBox[{
+         RowBox[{"htz", "[", 
+          RowBox[{
+           RowBox[{"t", "[", "]"}], ",", 
+           RowBox[{"x", "[", "]"}], ",", 
+           RowBox[{"y", "[", "]"}], ",", 
+           RowBox[{"z", "[", "]"}]}], "]"}], ",", 
+         RowBox[{"t", "[", "]"}]}], "]"}]}]}], ",", 
+     RowBox[{
+      RowBox[{"D", "[", 
+       RowBox[{
+        RowBox[{"D", "[", 
+         RowBox[{
+          RowBox[{"hxx", "[", 
+           RowBox[{
+            RowBox[{"t", "[", "]"}], ",", 
+            RowBox[{"x", "[", "]"}], ",", 
+            RowBox[{"y", "[", "]"}], ",", 
+            RowBox[{"z", "[", "]"}]}], "]"}], ",", 
+          RowBox[{"t", "[", "]"}]}], "]"}], ",", 
+        RowBox[{"t", "[", "]"}]}], "]"}], "\[Rule]", 
+      RowBox[{
+       SuperscriptBox["\[Epsilon]", "2"], " ", 
+       RowBox[{"D", "[", 
+        RowBox[{
+         RowBox[{"D", "[", 
+          RowBox[{
+           RowBox[{"hxx", "[", 
+            RowBox[{
+             RowBox[{"t", "[", "]"}], ",", 
+             RowBox[{"x", "[", "]"}], ",", 
+             RowBox[{"y", "[", "]"}], ",", 
+             RowBox[{"z", "[", "]"}]}], "]"}], ",", 
+           RowBox[{"t", "[", "]"}]}], "]"}], ",", 
+         RowBox[{"t", "[", "]"}]}], "]"}]}]}], ",", 
+     RowBox[{
+      RowBox[{"D", "[", 
+       RowBox[{
+        RowBox[{"D", "[", 
+         RowBox[{
+          RowBox[{"hyy", "[", 
+           RowBox[{
+            RowBox[{"t", "[", "]"}], ",", 
+            RowBox[{"x", "[", "]"}], ",", 
+            RowBox[{"y", "[", "]"}], ",", 
+            RowBox[{"z", "[", "]"}]}], "]"}], ",", 
+          RowBox[{"t", "[", "]"}]}], "]"}], ",", 
+        RowBox[{"t", "[", "]"}]}], "]"}], "\[Rule]", 
+      RowBox[{
+       SuperscriptBox["\[Epsilon]", "2"], " ", 
+       RowBox[{"D", "[", 
+        RowBox[{
+         RowBox[{"D", "[", 
+          RowBox[{
+           RowBox[{"hyy", "[", 
+            RowBox[{
+             RowBox[{"t", "[", "]"}], ",", 
+             RowBox[{"x", "[", "]"}], ",", 
+             RowBox[{"y", "[", "]"}], ",", 
+             RowBox[{"z", "[", "]"}]}], "]"}], ",", 
+           RowBox[{"t", "[", "]"}]}], "]"}], ",", 
+         RowBox[{"t", "[", "]"}]}], "]"}]}]}], ",", 
+     RowBox[{
+      RowBox[{"D", "[", 
+       RowBox[{
+        RowBox[{"D", "[", 
+         RowBox[{
+          RowBox[{"hzz", "[", 
+           RowBox[{
+            RowBox[{"t", "[", "]"}], ",", 
+            RowBox[{"x", "[", "]"}], ",", 
+            RowBox[{"y", "[", "]"}], ",", 
+            RowBox[{"z", "[", "]"}]}], "]"}], ",", 
+          RowBox[{"t", "[", "]"}]}], "]"}], ",", 
+        RowBox[{"t", "[", "]"}]}], "]"}], "\[Rule]", 
+      RowBox[{
+       SuperscriptBox["\[Epsilon]", "2"], " ", 
+       RowBox[{"D", "[", 
+        RowBox[{
+         RowBox[{"D", "[", 
+          RowBox[{
+           RowBox[{"hzz", "[", 
+            RowBox[{
+             RowBox[{"t", "[", "]"}], ",", 
+             RowBox[{"x", "[", "]"}], ",", 
+             RowBox[{"y", "[", "]"}], ",", 
+             RowBox[{"z", "[", "]"}]}], "]"}], ",", 
+           RowBox[{"t", "[", "]"}]}], "]"}], ",", 
+         RowBox[{"t", "[", "]"}]}], "]"}]}]}], ",", 
+     RowBox[{
+      RowBox[{"D", "[", 
+       RowBox[{
+        RowBox[{"D", "[", 
+         RowBox[{
+          RowBox[{"htx", "[", 
+           RowBox[{
+            RowBox[{"t", "[", "]"}], ",", 
+            RowBox[{"x", "[", "]"}], ",", 
+            RowBox[{"y", "[", "]"}], ",", 
+            RowBox[{"z", "[", "]"}]}], "]"}], ",", 
+          RowBox[{"t", "[", "]"}]}], "]"}], ",", 
+        RowBox[{"t", "[", "]"}]}], "]"}], "\[Rule]", 
+      RowBox[{
+       SuperscriptBox["\[Epsilon]", "2"], " ", 
+       RowBox[{"D", "[", 
+        RowBox[{
+         RowBox[{"D", "[", 
+          RowBox[{
+           RowBox[{"htx", "[", 
+            RowBox[{
+             RowBox[{"t", "[", "]"}], ",", 
+             RowBox[{"x", "[", "]"}], ",", 
+             RowBox[{"y", "[", "]"}], ",", 
+             RowBox[{"z", "[", "]"}]}], "]"}], ",", 
+           RowBox[{"t", "[", "]"}]}], "]"}], ",", 
+         RowBox[{"t", "[", "]"}]}], "]"}]}]}], ",", 
+     RowBox[{
+      RowBox[{"D", "[", 
+       RowBox[{
+        RowBox[{"D", "[", 
+         RowBox[{
+          RowBox[{"hty", "[", 
+           RowBox[{
+            RowBox[{"t", "[", "]"}], ",", 
+            RowBox[{"x", "[", "]"}], ",", 
+            RowBox[{"y", "[", "]"}], ",", 
+            RowBox[{"z", "[", "]"}]}], "]"}], ",", 
+          RowBox[{"t", "[", "]"}]}], "]"}], ",", 
+        RowBox[{"t", "[", "]"}]}], "]"}], "\[Rule]", 
+      RowBox[{
+       SuperscriptBox["\[Epsilon]", "2"], " ", 
+       RowBox[{"D", "[", 
+        RowBox[{
+         RowBox[{"D", "[", 
+          RowBox[{
+           RowBox[{"hty", "[", 
+            RowBox[{
+             RowBox[{"t", "[", "]"}], ",", 
+             RowBox[{"x", "[", "]"}], ",", 
+             RowBox[{"y", "[", "]"}], ",", 
+             RowBox[{"z", "[", "]"}]}], "]"}], ",", 
+           RowBox[{"t", "[", "]"}]}], "]"}], ",", 
+         RowBox[{"t", "[", "]"}]}], "]"}]}]}], ",", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"D", "[", 
+       RowBox[{
+        RowBox[{"D", "[", 
+         RowBox[{
+          RowBox[{"htz", "[", 
+           RowBox[{
+            RowBox[{"t", "[", "]"}], ",", 
+            RowBox[{"x", "[", "]"}], ",", 
+            RowBox[{"y", "[", "]"}], ",", 
+            RowBox[{"z", "[", "]"}]}], "]"}], ",", 
+          RowBox[{"t", "[", "]"}]}], "]"}], ",", 
+        RowBox[{"t", "[", "]"}]}], "]"}], "\[Rule]", 
+      RowBox[{
+       SuperscriptBox["\[Epsilon]", "2"], " ", 
+       RowBox[{"D", "[", 
+        RowBox[{
+         RowBox[{"D", "[", 
+          RowBox[{
+           RowBox[{"htz", "[", 
+            RowBox[{
+             RowBox[{"t", "[", "]"}], ",", 
+             RowBox[{"x", "[", "]"}], ",", 
+             RowBox[{"y", "[", "]"}], ",", 
+             RowBox[{"z", "[", "]"}]}], "]"}], ",", 
+           RowBox[{"t", "[", "]"}]}], "]"}], ",", 
+         RowBox[{"t", "[", "]"}]}], "]"}]}]}]}], "}"}]}], ";"}]], "Input",Expr\
+essionUUID->"09c8fa62-adce-4921-9f9a-af72f00127ac"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"ExtraReplacement", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{
+      RowBox[{
+       SuperscriptBox[
+        InterpretationBox[
+         StyleBox["htz",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`htz,
+         Editable->False], 
+        TagBox[
+         RowBox[{"(", 
+          RowBox[{"1", ",", "0", ",", "0", ",", "1"}], ")"}],
+         Derivative],
+        MultilineFunction->None], "[", 
+       RowBox[{
+        InterpretationBox[
+         StyleBox["t",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`t[],
+         Editable->False], ",", 
+        InterpretationBox[
+         StyleBox["x",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`x[],
+         Editable->False], ",", 
+        InterpretationBox[
+         StyleBox["y",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`y[],
+         Editable->False], ",", 
+        InterpretationBox[
+         StyleBox["z",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`z[],
+         Editable->False]}], "]"}], "\[Rule]", 
+      RowBox[{"\[Epsilon]", 
+       RowBox[{
+        SuperscriptBox[
+         InterpretationBox[
+          StyleBox["htz",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`htz,
+          Editable->False], 
+         TagBox[
+          RowBox[{"(", 
+           RowBox[{"1", ",", "0", ",", "0", ",", "1"}], ")"}],
+          Derivative],
+         MultilineFunction->None], "[", 
+        RowBox[{
+         InterpretationBox[
+          StyleBox["t",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`t[],
+          Editable->False], ",", 
+         InterpretationBox[
+          StyleBox["x",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`x[],
+          Editable->False], ",", 
+         InterpretationBox[
+          StyleBox["y",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`y[],
+          Editable->False], ",", 
+         InterpretationBox[
+          StyleBox["z",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`z[],
+          Editable->False]}], "]"}]}]}], ",", 
+     RowBox[{
+      RowBox[{
+       SuperscriptBox[
+        InterpretationBox[
+         StyleBox["hty",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`hty,
+         Editable->False], 
+        TagBox[
+         RowBox[{"(", 
+          RowBox[{"1", ",", "0", ",", "1", ",", "0"}], ")"}],
+         Derivative],
+        MultilineFunction->None], "[", 
+       RowBox[{
+        InterpretationBox[
+         StyleBox["t",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`t[],
+         Editable->False], ",", 
+        InterpretationBox[
+         StyleBox["x",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`x[],
+         Editable->False], ",", 
+        InterpretationBox[
+         StyleBox["y",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`y[],
+         Editable->False], ",", 
+        InterpretationBox[
+         StyleBox["z",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`z[],
+         Editable->False]}], "]"}], "\[Rule]", 
+      RowBox[{"\[Epsilon]", 
+       RowBox[{
+        SuperscriptBox[
+         InterpretationBox[
+          StyleBox["hty",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`hty,
+          Editable->False], 
+         TagBox[
+          RowBox[{"(", 
+           RowBox[{"1", ",", "0", ",", "1", ",", "0"}], ")"}],
+          Derivative],
+         MultilineFunction->None], "[", 
+        RowBox[{
+         InterpretationBox[
+          StyleBox["t",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`t[],
+          Editable->False], ",", 
+         InterpretationBox[
+          StyleBox["x",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`x[],
+          Editable->False], ",", 
+         InterpretationBox[
+          StyleBox["y",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`y[],
+          Editable->False], ",", 
+         InterpretationBox[
+          StyleBox["z",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`z[],
+          Editable->False]}], "]"}]}]}], ",", 
+     RowBox[{
+      RowBox[{
+       SuperscriptBox[
+        InterpretationBox[
+         StyleBox["htx",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`htx,
+         Editable->False], 
+        TagBox[
+         RowBox[{"(", 
+          RowBox[{"1", ",", "1", ",", "0", ",", "0"}], ")"}],
+         Derivative],
+        MultilineFunction->None], "[", 
+       RowBox[{
+        InterpretationBox[
+         StyleBox["t",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`t[],
+         Editable->False], ",", 
+        InterpretationBox[
+         StyleBox["x",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`x[],
+         Editable->False], ",", 
+        InterpretationBox[
+         StyleBox["y",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`y[],
+         Editable->False], ",", 
+        InterpretationBox[
+         StyleBox["z",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`z[],
+         Editable->False]}], "]"}], "\[Rule]", 
+      RowBox[{"\[Epsilon]", 
+       RowBox[{
+        SuperscriptBox[
+         InterpretationBox[
+          StyleBox["htx",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`htx,
+          Editable->False], 
+         TagBox[
+          RowBox[{"(", 
+           RowBox[{"1", ",", "1", ",", "0", ",", "0"}], ")"}],
+          Derivative],
+         MultilineFunction->None], "[", 
+        RowBox[{
+         InterpretationBox[
+          StyleBox["t",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`t[],
+          Editable->False], ",", 
+         InterpretationBox[
+          StyleBox["x",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`x[],
+          Editable->False], ",", 
+         InterpretationBox[
+          StyleBox["y",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`y[],
+          Editable->False], ",", 
+         InterpretationBox[
+          StyleBox["z",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`z[],
+          Editable->False]}], "]"}]}]}], ",", 
+     RowBox[{
+      RowBox[{
+       SuperscriptBox[
+        InterpretationBox[
+         StyleBox["htz",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`htz,
+         Editable->False], 
+        TagBox[
+         RowBox[{"(", 
+          RowBox[{"1", ",", "0", ",", "0", ",", "1"}], ")"}],
+         Derivative],
+        MultilineFunction->None], "[", 
+       RowBox[{
+        InterpretationBox[
+         StyleBox["t",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`t[],
+         Editable->False], ",", 
+        InterpretationBox[
+         StyleBox["x",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`x[],
+         Editable->False], ",", 
+        InterpretationBox[
+         StyleBox["y",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`y[],
+         Editable->False], ",", 
+        InterpretationBox[
+         StyleBox["z",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`z[],
+         Editable->False]}], "]"}], "\[Rule]", 
+      RowBox[{
+       InterpretationBox[
+        StyleBox["\[Epsilon]",
+         ShowAutoStyles->False,
+         AutoSpacing->False],
+        $CellContext`\[Epsilon],
+        Editable->False], " ", 
+       RowBox[{
+        SuperscriptBox[
+         InterpretationBox[
+          StyleBox["htz",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`htz,
+          Editable->False], 
+         TagBox[
+          RowBox[{"(", 
+           RowBox[{"1", ",", "0", ",", "0", ",", "1"}], ")"}],
+          Derivative],
+         MultilineFunction->None], "[", 
+        RowBox[{
+         InterpretationBox[
+          StyleBox["t",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`t[],
+          Editable->False], ",", 
+         InterpretationBox[
+          StyleBox["x",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`x[],
+          Editable->False], ",", 
+         InterpretationBox[
+          StyleBox["y",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`y[],
+          Editable->False], ",", 
+         InterpretationBox[
+          StyleBox["z",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`z[],
+          Editable->False]}], "]"}]}]}], ",", 
+     RowBox[{
+      RowBox[{
+       SuperscriptBox[
+        InterpretationBox[
+         StyleBox["hty",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`hty,
+         Editable->False], 
+        TagBox[
+         RowBox[{"(", 
+          RowBox[{"1", ",", "0", ",", "1", ",", "0"}], ")"}],
+         Derivative],
+        MultilineFunction->None], "[", 
+       RowBox[{
+        InterpretationBox[
+         StyleBox["t",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`t[],
+         Editable->False], ",", 
+        InterpretationBox[
+         StyleBox["x",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`x[],
+         Editable->False], ",", 
+        InterpretationBox[
+         StyleBox["y",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`y[],
+         Editable->False], ",", 
+        InterpretationBox[
+         StyleBox["z",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`z[],
+         Editable->False]}], "]"}], "\[Rule]", 
+      RowBox[{
+       InterpretationBox[
+        StyleBox["\[Epsilon]",
+         ShowAutoStyles->False,
+         AutoSpacing->False],
+        $CellContext`\[Epsilon],
+        Editable->False], " ", 
+       RowBox[{
+        SuperscriptBox[
+         InterpretationBox[
+          StyleBox["hty",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`hty,
+          Editable->False], 
+         TagBox[
+          RowBox[{"(", 
+           RowBox[{"1", ",", "0", ",", "1", ",", "0"}], ")"}],
+          Derivative],
+         MultilineFunction->None], "[", 
+        RowBox[{
+         InterpretationBox[
+          StyleBox["t",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`t[],
+          Editable->False], ",", 
+         InterpretationBox[
+          StyleBox["x",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`x[],
+          Editable->False], ",", 
+         InterpretationBox[
+          StyleBox["y",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`y[],
+          Editable->False], ",", 
+         InterpretationBox[
+          StyleBox["z",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`z[],
+          Editable->False]}], "]"}]}]}], ",", 
+     RowBox[{
+      RowBox[{
+       SuperscriptBox[
+        InterpretationBox[
+         StyleBox["htx",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`htx,
+         Editable->False], 
+        TagBox[
+         RowBox[{"(", 
+          RowBox[{"1", ",", "1", ",", "0", ",", "0"}], ")"}],
+         Derivative],
+        MultilineFunction->None], "[", 
+       RowBox[{
+        InterpretationBox[
+         StyleBox["t",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`t[],
+         Editable->False], ",", 
+        InterpretationBox[
+         StyleBox["x",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`x[],
+         Editable->False], ",", 
+        InterpretationBox[
+         StyleBox["y",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`y[],
+         Editable->False], ",", 
+        InterpretationBox[
+         StyleBox["z",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`z[],
+         Editable->False]}], "]"}], "\[Rule]", 
+      RowBox[{
+       InterpretationBox[
+        StyleBox["\[Epsilon]",
+         ShowAutoStyles->False,
+         AutoSpacing->False],
+        $CellContext`\[Epsilon],
+        Editable->False], " ", 
+       RowBox[{
+        SuperscriptBox[
+         InterpretationBox[
+          StyleBox["htx",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`htx,
+          Editable->False], 
+         TagBox[
+          RowBox[{"(", 
+           RowBox[{"1", ",", "1", ",", "0", ",", "0"}], ")"}],
+          Derivative],
+         MultilineFunction->None], "[", 
+        RowBox[{
+         InterpretationBox[
+          StyleBox["t",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`t[],
+          Editable->False], ",", 
+         InterpretationBox[
+          StyleBox["x",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`x[],
+          Editable->False], ",", 
+         InterpretationBox[
+          StyleBox["y",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`y[],
+          Editable->False], ",", 
+         InterpretationBox[
+          StyleBox["z",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`z[],
+          Editable->False]}], "]"}]}]}], ",", 
+     RowBox[{
+      RowBox[{
+       SuperscriptBox[
+        InterpretationBox[
+         StyleBox["hyy",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`hyy,
+         Editable->False], 
+        TagBox[
+         RowBox[{"(", 
+          RowBox[{"1", ",", "1", ",", "0", ",", "0"}], ")"}],
+         Derivative],
+        MultilineFunction->None], "[", 
+       RowBox[{
+        InterpretationBox[
+         StyleBox["t",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`t[],
+         Editable->False], ",", 
+        InterpretationBox[
+         StyleBox["x",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`x[],
+         Editable->False], ",", 
+        InterpretationBox[
+         StyleBox["y",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`y[],
+         Editable->False], ",", 
+        InterpretationBox[
+         StyleBox["z",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`z[],
+         Editable->False]}], "]"}], "\[Rule]", 
+      RowBox[{"\[Epsilon]", 
+       RowBox[{
+        SuperscriptBox[
+         InterpretationBox[
+          StyleBox["hyy",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`hyy,
+          Editable->False], 
+         TagBox[
+          RowBox[{"(", 
+           RowBox[{"1", ",", "1", ",", "0", ",", "0"}], ")"}],
+          Derivative],
+         MultilineFunction->None], "[", 
+        RowBox[{
+         InterpretationBox[
+          StyleBox["t",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`t[],
+          Editable->False], ",", 
+         InterpretationBox[
+          StyleBox["x",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`x[],
+          Editable->False], ",", 
+         InterpretationBox[
+          StyleBox["y",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`y[],
+          Editable->False], ",", 
+         InterpretationBox[
+          StyleBox["z",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`z[],
+          Editable->False]}], "]"}]}]}], ",", 
+     RowBox[{
+      RowBox[{
+       SuperscriptBox[
+        InterpretationBox[
+         StyleBox["hzz",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`hzz,
+         Editable->False], 
+        TagBox[
+         RowBox[{"(", 
+          RowBox[{"1", ",", "1", ",", "0", ",", "0"}], ")"}],
+         Derivative],
+        MultilineFunction->None], "[", 
+       RowBox[{
+        InterpretationBox[
+         StyleBox["t",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`t[],
+         Editable->False], ",", 
+        InterpretationBox[
+         StyleBox["x",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`x[],
+         Editable->False], ",", 
+        InterpretationBox[
+         StyleBox["y",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`y[],
+         Editable->False], ",", 
+        InterpretationBox[
+         StyleBox["z",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`z[],
+         Editable->False]}], "]"}], "\[Rule]", 
+      RowBox[{"\[Epsilon]", 
+       RowBox[{
+        SuperscriptBox[
+         InterpretationBox[
+          StyleBox["hzz",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`hzz,
+          Editable->False], 
+         TagBox[
+          RowBox[{"(", 
+           RowBox[{"1", ",", "1", ",", "0", ",", "0"}], ")"}],
+          Derivative],
+         MultilineFunction->None], "[", 
+        RowBox[{
+         InterpretationBox[
+          StyleBox["t",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`t[],
+          Editable->False], ",", 
+         InterpretationBox[
+          StyleBox["x",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`x[],
+          Editable->False], ",", 
+         InterpretationBox[
+          StyleBox["y",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`y[],
+          Editable->False], ",", 
+         InterpretationBox[
+          StyleBox["z",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`z[],
+          Editable->False]}], "]"}]}]}], ",", 
+     RowBox[{
+      RowBox[{
+       SuperscriptBox[
+        InterpretationBox[
+         StyleBox["hyy",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`hyy,
+         Editable->False], 
+        TagBox[
+         RowBox[{"(", 
+          RowBox[{"1", ",", "1", ",", "0", ",", "0"}], ")"}],
+         Derivative],
+        MultilineFunction->None], "[", 
+       RowBox[{
+        InterpretationBox[
+         StyleBox["t",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`t[],
+         Editable->False], ",", 
+        InterpretationBox[
+         StyleBox["x",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`x[],
+         Editable->False], ",", 
+        InterpretationBox[
+         StyleBox["y",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`y[],
+         Editable->False], ",", 
+        InterpretationBox[
+         StyleBox["z",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`z[],
+         Editable->False]}], "]"}], "\[Rule]", 
+      RowBox[{"\[Epsilon]", 
+       RowBox[{
+        SuperscriptBox[
+         InterpretationBox[
+          StyleBox["hyy",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`hyy,
+          Editable->False], 
+         TagBox[
+          RowBox[{"(", 
+           RowBox[{"1", ",", "1", ",", "0", ",", "0"}], ")"}],
+          Derivative],
+         MultilineFunction->None], "[", 
+        RowBox[{
+         InterpretationBox[
+          StyleBox["t",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`t[],
+          Editable->False], ",", 
+         InterpretationBox[
+          StyleBox["x",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`x[],
+          Editable->False], ",", 
+         InterpretationBox[
+          StyleBox["y",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`y[],
+          Editable->False], ",", 
+         InterpretationBox[
+          StyleBox["z",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`z[],
+          Editable->False]}], "]"}]}]}], ",", 
+     RowBox[{
+      RowBox[{
+       SuperscriptBox[
+        InterpretationBox[
+         StyleBox["hzz",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`hzz,
+         Editable->False], 
+        TagBox[
+         RowBox[{"(", 
+          RowBox[{"1", ",", "1", ",", "0", ",", "0"}], ")"}],
+         Derivative],
+        MultilineFunction->None], "[", 
+       RowBox[{
+        InterpretationBox[
+         StyleBox["t",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`t[],
+         Editable->False], ",", 
+        InterpretationBox[
+         StyleBox["x",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`x[],
+         Editable->False], ",", 
+        InterpretationBox[
+         StyleBox["y",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`y[],
+         Editable->False], ",", 
+        InterpretationBox[
+         StyleBox["z",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`z[],
+         Editable->False]}], "]"}], "\[Rule]", 
+      RowBox[{"\[Epsilon]", 
+       RowBox[{
+        SuperscriptBox[
+         InterpretationBox[
+          StyleBox["hzz",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`hzz,
+          Editable->False], 
+         TagBox[
+          RowBox[{"(", 
+           RowBox[{"1", ",", "1", ",", "0", ",", "0"}], ")"}],
+          Derivative],
+         MultilineFunction->None], "[", 
+        RowBox[{
+         InterpretationBox[
+          StyleBox["t",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`t[],
+          Editable->False], ",", 
+         InterpretationBox[
+          StyleBox["x",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`x[],
+          Editable->False], ",", 
+         InterpretationBox[
+          StyleBox["y",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`y[],
+          Editable->False], ",", 
+         InterpretationBox[
+          StyleBox["z",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`z[],
+          Editable->False]}], "]"}]}]}], ",", 
+     RowBox[{
+      RowBox[{
+       SuperscriptBox[
+        InterpretationBox[
+         StyleBox["hxx",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`hxx,
+         Editable->False], 
+        TagBox[
+         RowBox[{"(", 
+          RowBox[{"1", ",", "0", ",", "1", ",", "0"}], ")"}],
+         Derivative],
+        MultilineFunction->None], "[", 
+       RowBox[{
+        InterpretationBox[
+         StyleBox["t",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`t[],
+         Editable->False], ",", 
+        InterpretationBox[
+         StyleBox["x",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`x[],
+         Editable->False], ",", 
+        InterpretationBox[
+         StyleBox["y",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`y[],
+         Editable->False], ",", 
+        InterpretationBox[
+         StyleBox["z",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`z[],
+         Editable->False]}], "]"}], "\[Rule]", 
+      RowBox[{"\[Epsilon]", 
+       RowBox[{
+        SuperscriptBox[
+         InterpretationBox[
+          StyleBox["hxx",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`hxx,
+          Editable->False], 
+         TagBox[
+          RowBox[{"(", 
+           RowBox[{"1", ",", "0", ",", "1", ",", "0"}], ")"}],
+          Derivative],
+         MultilineFunction->None], "[", 
+        RowBox[{
+         InterpretationBox[
+          StyleBox["t",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`t[],
+          Editable->False], ",", 
+         InterpretationBox[
+          StyleBox["x",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`x[],
+          Editable->False], ",", 
+         InterpretationBox[
+          StyleBox["y",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`y[],
+          Editable->False], ",", 
+         InterpretationBox[
+          StyleBox["z",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`z[],
+          Editable->False]}], "]"}]}]}], ",", 
+     RowBox[{
+      RowBox[{
+       SuperscriptBox[
+        InterpretationBox[
+         StyleBox["hzz",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`hzz,
+         Editable->False], 
+        TagBox[
+         RowBox[{"(", 
+          RowBox[{"1", ",", "0", ",", "1", ",", "0"}], ")"}],
+         Derivative],
+        MultilineFunction->None], "[", 
+       RowBox[{
+        InterpretationBox[
+         StyleBox["t",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`t[],
+         Editable->False], ",", 
+        InterpretationBox[
+         StyleBox["x",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`x[],
+         Editable->False], ",", 
+        InterpretationBox[
+         StyleBox["y",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`y[],
+         Editable->False], ",", 
+        InterpretationBox[
+         StyleBox["z",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`z[],
+         Editable->False]}], "]"}], "\[Rule]", 
+      RowBox[{"\[Epsilon]", 
+       RowBox[{
+        SuperscriptBox[
+         InterpretationBox[
+          StyleBox["hzz",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`hzz,
+          Editable->False], 
+         TagBox[
+          RowBox[{"(", 
+           RowBox[{"1", ",", "0", ",", "1", ",", "0"}], ")"}],
+          Derivative],
+         MultilineFunction->None], "[", 
+        RowBox[{
+         InterpretationBox[
+          StyleBox["t",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`t[],
+          Editable->False], ",", 
+         InterpretationBox[
+          StyleBox["x",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`x[],
+          Editable->False], ",", 
+         InterpretationBox[
+          StyleBox["y",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`y[],
+          Editable->False], ",", 
+         InterpretationBox[
+          StyleBox["z",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`z[],
+          Editable->False]}], "]"}]}]}], ",", 
+     RowBox[{
+      RowBox[{
+       SuperscriptBox[
+        InterpretationBox[
+         StyleBox["hxx",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`hxx,
+         Editable->False], 
+        TagBox[
+         RowBox[{"(", 
+          RowBox[{"1", ",", "0", ",", "1", ",", "0"}], ")"}],
+         Derivative],
+        MultilineFunction->None], "[", 
+       RowBox[{
+        InterpretationBox[
+         StyleBox["t",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`t[],
+         Editable->False], ",", 
+        InterpretationBox[
+         StyleBox["x",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`x[],
+         Editable->False], ",", 
+        InterpretationBox[
+         StyleBox["y",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`y[],
+         Editable->False], ",", 
+        InterpretationBox[
+         StyleBox["z",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`z[],
+         Editable->False]}], "]"}], "\[Rule]", 
+      RowBox[{"\[Epsilon]", 
+       RowBox[{
+        SuperscriptBox[
+         InterpretationBox[
+          StyleBox["hxx",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`hxx,
+          Editable->False], 
+         TagBox[
+          RowBox[{"(", 
+           RowBox[{"1", ",", "0", ",", "1", ",", "0"}], ")"}],
+          Derivative],
+         MultilineFunction->None], "[", 
+        RowBox[{
+         InterpretationBox[
+          StyleBox["t",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`t[],
+          Editable->False], ",", 
+         InterpretationBox[
+          StyleBox["x",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`x[],
+          Editable->False], ",", 
+         InterpretationBox[
+          StyleBox["y",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`y[],
+          Editable->False], ",", 
+         InterpretationBox[
+          StyleBox["z",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`z[],
+          Editable->False]}], "]"}]}]}], ",", 
+     RowBox[{
+      RowBox[{
+       SuperscriptBox[
+        InterpretationBox[
+         StyleBox["hzz",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`hzz,
+         Editable->False], 
+        TagBox[
+         RowBox[{"(", 
+          RowBox[{"1", ",", "0", ",", "1", ",", "0"}], ")"}],
+         Derivative],
+        MultilineFunction->None], "[", 
+       RowBox[{
+        InterpretationBox[
+         StyleBox["t",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`t[],
+         Editable->False], ",", 
+        InterpretationBox[
+         StyleBox["x",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`x[],
+         Editable->False], ",", 
+        InterpretationBox[
+         StyleBox["y",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`y[],
+         Editable->False], ",", 
+        InterpretationBox[
+         StyleBox["z",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`z[],
+         Editable->False]}], "]"}], "\[Rule]", 
+      RowBox[{"\[Epsilon]", 
+       RowBox[{
+        SuperscriptBox[
+         InterpretationBox[
+          StyleBox["hzz",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`hzz,
+          Editable->False], 
+         TagBox[
+          RowBox[{"(", 
+           RowBox[{"1", ",", "0", ",", "1", ",", "0"}], ")"}],
+          Derivative],
+         MultilineFunction->None], "[", 
+        RowBox[{
+         InterpretationBox[
+          StyleBox["t",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`t[],
+          Editable->False], ",", 
+         InterpretationBox[
+          StyleBox["x",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`x[],
+          Editable->False], ",", 
+         InterpretationBox[
+          StyleBox["y",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`y[],
+          Editable->False], ",", 
+         InterpretationBox[
+          StyleBox["z",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`z[],
+          Editable->False]}], "]"}]}]}], ",", 
+     RowBox[{
+      RowBox[{
+       SuperscriptBox[
+        InterpretationBox[
+         StyleBox["hxx",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`hxx,
+         Editable->False], 
+        TagBox[
+         RowBox[{"(", 
+          RowBox[{"1", ",", "0", ",", "0", ",", "1"}], ")"}],
+         Derivative],
+        MultilineFunction->None], "[", 
+       RowBox[{
+        InterpretationBox[
+         StyleBox["t",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`t[],
+         Editable->False], ",", 
+        InterpretationBox[
+         StyleBox["x",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`x[],
+         Editable->False], ",", 
+        InterpretationBox[
+         StyleBox["y",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`y[],
+         Editable->False], ",", 
+        InterpretationBox[
+         StyleBox["z",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`z[],
+         Editable->False]}], "]"}], "\[Rule]", 
+      RowBox[{"\[Epsilon]", 
+       RowBox[{
+        SuperscriptBox[
+         InterpretationBox[
+          StyleBox["hxx",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`hxx,
+          Editable->False], 
+         TagBox[
+          RowBox[{"(", 
+           RowBox[{"1", ",", "0", ",", "0", ",", "1"}], ")"}],
+          Derivative],
+         MultilineFunction->None], "[", 
+        RowBox[{
+         InterpretationBox[
+          StyleBox["t",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`t[],
+          Editable->False], ",", 
+         InterpretationBox[
+          StyleBox["x",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`x[],
+          Editable->False], ",", 
+         InterpretationBox[
+          StyleBox["y",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`y[],
+          Editable->False], ",", 
+         InterpretationBox[
+          StyleBox["z",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`z[],
+          Editable->False]}], "]"}]}]}], ",", 
+     RowBox[{
+      RowBox[{
+       SuperscriptBox[
+        InterpretationBox[
+         StyleBox["hyy",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`hyy,
+         Editable->False], 
+        TagBox[
+         RowBox[{"(", 
+          RowBox[{"1", ",", "0", ",", "0", ",", "1"}], ")"}],
+         Derivative],
+        MultilineFunction->None], "[", 
+       RowBox[{
+        InterpretationBox[
+         StyleBox["t",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`t[],
+         Editable->False], ",", 
+        InterpretationBox[
+         StyleBox["x",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`x[],
+         Editable->False], ",", 
+        InterpretationBox[
+         StyleBox["y",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`y[],
+         Editable->False], ",", 
+        InterpretationBox[
+         StyleBox["z",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`z[],
+         Editable->False]}], "]"}], "\[Rule]", 
+      RowBox[{"\[Epsilon]", 
+       RowBox[{
+        SuperscriptBox[
+         InterpretationBox[
+          StyleBox["hyy",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`hyy,
+          Editable->False], 
+         TagBox[
+          RowBox[{"(", 
+           RowBox[{"1", ",", "0", ",", "0", ",", "1"}], ")"}],
+          Derivative],
+         MultilineFunction->None], "[", 
+        RowBox[{
+         InterpretationBox[
+          StyleBox["t",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`t[],
+          Editable->False], ",", 
+         InterpretationBox[
+          StyleBox["x",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`x[],
+          Editable->False], ",", 
+         InterpretationBox[
+          StyleBox["y",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`y[],
+          Editable->False], ",", 
+         InterpretationBox[
+          StyleBox["z",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`z[],
+          Editable->False]}], "]"}]}]}], ",", 
+     RowBox[{
+      RowBox[{
+       SuperscriptBox[
+        InterpretationBox[
+         StyleBox["hxx",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`hxx,
+         Editable->False], 
+        TagBox[
+         RowBox[{"(", 
+          RowBox[{"1", ",", "0", ",", "0", ",", "1"}], ")"}],
+         Derivative],
+        MultilineFunction->None], "[", 
+       RowBox[{
+        InterpretationBox[
+         StyleBox["t",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`t[],
+         Editable->False], ",", 
+        InterpretationBox[
+         StyleBox["x",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`x[],
+         Editable->False], ",", 
+        InterpretationBox[
+         StyleBox["y",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`y[],
+         Editable->False], ",", 
+        InterpretationBox[
+         StyleBox["z",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`z[],
+         Editable->False]}], "]"}], "\[Rule]", 
+      RowBox[{"\[Epsilon]", 
+       RowBox[{
+        SuperscriptBox[
+         InterpretationBox[
+          StyleBox["hxx",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`hxx,
+          Editable->False], 
+         TagBox[
+          RowBox[{"(", 
+           RowBox[{"1", ",", "0", ",", "0", ",", "1"}], ")"}],
+          Derivative],
+         MultilineFunction->None], "[", 
+        RowBox[{
+         InterpretationBox[
+          StyleBox["t",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`t[],
+          Editable->False], ",", 
+         InterpretationBox[
+          StyleBox["x",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`x[],
+          Editable->False], ",", 
+         InterpretationBox[
+          StyleBox["y",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`y[],
+          Editable->False], ",", 
+         InterpretationBox[
+          StyleBox["z",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`z[],
+          Editable->False]}], "]"}]}]}], ",", 
+     RowBox[{
+      RowBox[{
+       SuperscriptBox[
+        InterpretationBox[
+         StyleBox["hyy",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`hyy,
+         Editable->False], 
+        TagBox[
+         RowBox[{"(", 
+          RowBox[{"1", ",", "0", ",", "0", ",", "1"}], ")"}],
+         Derivative],
+        MultilineFunction->None], "[", 
+       RowBox[{
+        InterpretationBox[
+         StyleBox["t",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`t[],
+         Editable->False], ",", 
+        InterpretationBox[
+         StyleBox["x",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`x[],
+         Editable->False], ",", 
+        InterpretationBox[
+         StyleBox["y",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`y[],
+         Editable->False], ",", 
+        InterpretationBox[
+         StyleBox["z",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`z[],
+         Editable->False]}], "]"}], "\[Rule]", 
+      RowBox[{"\[Epsilon]", 
+       RowBox[{
+        SuperscriptBox[
+         InterpretationBox[
+          StyleBox["hyy",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`hyy,
+          Editable->False], 
+         TagBox[
+          RowBox[{"(", 
+           RowBox[{"1", ",", "0", ",", "0", ",", "1"}], ")"}],
+          Derivative],
+         MultilineFunction->None], "[", 
+        RowBox[{
+         InterpretationBox[
+          StyleBox["t",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`t[],
+          Editable->False], ",", 
+         InterpretationBox[
+          StyleBox["x",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`x[],
+          Editable->False], ",", 
+         InterpretationBox[
+          StyleBox["y",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`y[],
+          Editable->False], ",", 
+         InterpretationBox[
+          StyleBox["z",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`z[],
+          Editable->False]}], "]"}]}]}], ",", 
+     RowBox[{
+      RowBox[{
+       SuperscriptBox[
+        InterpretationBox[
+         StyleBox["htx",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`htx,
+         Editable->False], 
+        TagBox[
+         RowBox[{"(", 
+          RowBox[{"1", ",", "0", ",", "1", ",", "0"}], ")"}],
+         Derivative],
+        MultilineFunction->None], "[", 
+       RowBox[{
+        InterpretationBox[
+         StyleBox["t",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`t[],
+         Editable->False], ",", 
+        InterpretationBox[
+         StyleBox["x",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`x[],
+         Editable->False], ",", 
+        InterpretationBox[
+         StyleBox["y",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`y[],
+         Editable->False], ",", 
+        InterpretationBox[
+         StyleBox["z",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`z[],
+         Editable->False]}], "]"}], "\[Rule]", 
+      RowBox[{"\[Epsilon]", 
+       RowBox[{
+        SuperscriptBox[
+         InterpretationBox[
+          StyleBox["htx",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`htx,
+          Editable->False], 
+         TagBox[
+          RowBox[{"(", 
+           RowBox[{"1", ",", "0", ",", "1", ",", "0"}], ")"}],
+          Derivative],
+         MultilineFunction->None], "[", 
+        RowBox[{
+         InterpretationBox[
+          StyleBox["t",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`t[],
+          Editable->False], ",", 
+         InterpretationBox[
+          StyleBox["x",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`x[],
+          Editable->False], ",", 
+         InterpretationBox[
+          StyleBox["y",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`y[],
+          Editable->False], ",", 
+         InterpretationBox[
+          StyleBox["z",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`z[],
+          Editable->False]}], "]"}]}]}], ",", 
+     RowBox[{
+      RowBox[{
+       SuperscriptBox[
+        InterpretationBox[
+         StyleBox["hty",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`hty,
+         Editable->False], 
+        TagBox[
+         RowBox[{"(", 
+          RowBox[{"1", ",", "1", ",", "0", ",", "0"}], ")"}],
+         Derivative],
+        MultilineFunction->None], "[", 
+       RowBox[{
+        InterpretationBox[
+         StyleBox["t",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`t[],
+         Editable->False], ",", 
+        InterpretationBox[
+         StyleBox["x",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`x[],
+         Editable->False], ",", 
+        InterpretationBox[
+         StyleBox["y",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`y[],
+         Editable->False], ",", 
+        InterpretationBox[
+         StyleBox["z",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`z[],
+         Editable->False]}], "]"}], "\[Rule]", 
+      RowBox[{"\[Epsilon]", 
+       RowBox[{
+        SuperscriptBox[
+         InterpretationBox[
+          StyleBox["hty",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`hty,
+          Editable->False], 
+         TagBox[
+          RowBox[{"(", 
+           RowBox[{"1", ",", "1", ",", "0", ",", "0"}], ")"}],
+          Derivative],
+         MultilineFunction->None], "[", 
+        RowBox[{
+         InterpretationBox[
+          StyleBox["t",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`t[],
+          Editable->False], ",", 
+         InterpretationBox[
+          StyleBox["x",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`x[],
+          Editable->False], ",", 
+         InterpretationBox[
+          StyleBox["y",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`y[],
+          Editable->False], ",", 
+         InterpretationBox[
+          StyleBox["z",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`z[],
+          Editable->False]}], "]"}]}]}], ",", 
+     RowBox[{
+      RowBox[{
+       SuperscriptBox[
+        InterpretationBox[
+         StyleBox["htx",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`htx,
+         Editable->False], 
+        TagBox[
+         RowBox[{"(", 
+          RowBox[{"1", ",", "0", ",", "0", ",", "1"}], ")"}],
+         Derivative],
+        MultilineFunction->None], "[", 
+       RowBox[{
+        InterpretationBox[
+         StyleBox["t",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`t[],
+         Editable->False], ",", 
+        InterpretationBox[
+         StyleBox["x",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`x[],
+         Editable->False], ",", 
+        InterpretationBox[
+         StyleBox["y",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`y[],
+         Editable->False], ",", 
+        InterpretationBox[
+         StyleBox["z",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`z[],
+         Editable->False]}], "]"}], "\[Rule]", 
+      RowBox[{"\[Epsilon]", 
+       RowBox[{
+        SuperscriptBox[
+         InterpretationBox[
+          StyleBox["htx",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`htx,
+          Editable->False], 
+         TagBox[
+          RowBox[{"(", 
+           RowBox[{"1", ",", "0", ",", "0", ",", "1"}], ")"}],
+          Derivative],
+         MultilineFunction->None], "[", 
+        RowBox[{
+         InterpretationBox[
+          StyleBox["t",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`t[],
+          Editable->False], ",", 
+         InterpretationBox[
+          StyleBox["x",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`x[],
+          Editable->False], ",", 
+         InterpretationBox[
+          StyleBox["y",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`y[],
+          Editable->False], ",", 
+         InterpretationBox[
+          StyleBox["z",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`z[],
+          Editable->False]}], "]"}]}]}], ",", 
+     RowBox[{
+      RowBox[{
+       SuperscriptBox[
+        InterpretationBox[
+         StyleBox["htz",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`htz,
+         Editable->False], 
+        TagBox[
+         RowBox[{"(", 
+          RowBox[{"1", ",", "1", ",", "0", ",", "0"}], ")"}],
+         Derivative],
+        MultilineFunction->None], "[", 
+       RowBox[{
+        InterpretationBox[
+         StyleBox["t",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`t[],
+         Editable->False], ",", 
+        InterpretationBox[
+         StyleBox["x",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`x[],
+         Editable->False], ",", 
+        InterpretationBox[
+         StyleBox["y",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`y[],
+         Editable->False], ",", 
+        InterpretationBox[
+         StyleBox["z",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`z[],
+         Editable->False]}], "]"}], "\[Rule]", 
+      RowBox[{"\[Epsilon]", 
+       RowBox[{
+        SuperscriptBox[
+         InterpretationBox[
+          StyleBox["htz",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`htz,
+          Editable->False], 
+         TagBox[
+          RowBox[{"(", 
+           RowBox[{"1", ",", "1", ",", "0", ",", "0"}], ")"}],
+          Derivative],
+         MultilineFunction->None], "[", 
+        RowBox[{
+         InterpretationBox[
+          StyleBox["t",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`t[],
+          Editable->False], ",", 
+         InterpretationBox[
+          StyleBox["x",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`x[],
+          Editable->False], ",", 
+         InterpretationBox[
+          StyleBox["y",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`y[],
+          Editable->False], ",", 
+         InterpretationBox[
+          StyleBox["z",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`z[],
+          Editable->False]}], "]"}]}]}], ",", 
+     RowBox[{
+      RowBox[{
+       SuperscriptBox[
+        InterpretationBox[
+         StyleBox["hty",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`hty,
+         Editable->False], 
+        TagBox[
+         RowBox[{"(", 
+          RowBox[{"1", ",", "0", ",", "0", ",", "1"}], ")"}],
+         Derivative],
+        MultilineFunction->None], "[", 
+       RowBox[{
+        InterpretationBox[
+         StyleBox["t",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`t[],
+         Editable->False], ",", 
+        InterpretationBox[
+         StyleBox["x",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`x[],
+         Editable->False], ",", 
+        InterpretationBox[
+         StyleBox["y",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`y[],
+         Editable->False], ",", 
+        InterpretationBox[
+         StyleBox["z",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`z[],
+         Editable->False]}], "]"}], "\[Rule]", 
+      RowBox[{"\[Epsilon]", 
+       RowBox[{
+        SuperscriptBox[
+         InterpretationBox[
+          StyleBox["hty",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`hty,
+          Editable->False], 
+         TagBox[
+          RowBox[{"(", 
+           RowBox[{"1", ",", "0", ",", "0", ",", "1"}], ")"}],
+          Derivative],
+         MultilineFunction->None], "[", 
+        RowBox[{
+         InterpretationBox[
+          StyleBox["t",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`t[],
+          Editable->False], ",", 
+         InterpretationBox[
+          StyleBox["x",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`x[],
+          Editable->False], ",", 
+         InterpretationBox[
+          StyleBox["y",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`y[],
+          Editable->False], ",", 
+         InterpretationBox[
+          StyleBox["z",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`z[],
+          Editable->False]}], "]"}]}]}], ",", 
+     RowBox[{
+      RowBox[{
+       SuperscriptBox[
+        InterpretationBox[
+         StyleBox["htz",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`htz,
+         Editable->False], 
+        TagBox[
+         RowBox[{"(", 
+          RowBox[{"1", ",", "0", ",", "1", ",", "0"}], ")"}],
+         Derivative],
+        MultilineFunction->None], "[", 
+       RowBox[{
+        InterpretationBox[
+         StyleBox["t",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`t[],
+         Editable->False], ",", 
+        InterpretationBox[
+         StyleBox["x",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`x[],
+         Editable->False], ",", 
+        InterpretationBox[
+         StyleBox["y",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`y[],
+         Editable->False], ",", 
+        InterpretationBox[
+         StyleBox["z",
+          ShowAutoStyles->False,
+          AutoSpacing->False],
+         $CellContext`z[],
+         Editable->False]}], "]"}], "\[Rule]", 
+      RowBox[{"\[Epsilon]", 
+       RowBox[{
+        SuperscriptBox[
+         InterpretationBox[
+          StyleBox["htz",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`htz,
+          Editable->False], 
+         TagBox[
+          RowBox[{"(", 
+           RowBox[{"1", ",", "0", ",", "1", ",", "0"}], ")"}],
+          Derivative],
+         MultilineFunction->None], "[", 
+        RowBox[{
+         InterpretationBox[
+          StyleBox["t",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`t[],
+          Editable->False], ",", 
+         InterpretationBox[
+          StyleBox["x",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`x[],
+          Editable->False], ",", 
+         InterpretationBox[
+          StyleBox["y",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`y[],
+          Editable->False], ",", 
+         InterpretationBox[
+          StyleBox["z",
+           ShowAutoStyles->False,
+           AutoSpacing->False],
+          $CellContext`z[],
+          Editable->False]}], "]"}]}]}]}], "}"}]}], ";"}]], "Input",Expression\
+UUID->"c7a49fdf-f2b4-4148-992b-20c42538c280"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"CalRicci", "[", 
+    RowBox[{"0", ",", "1"}], "]"}], "/.", "ReplacementReq"}], "/.", 
+  "ExtraReplacement"}]], "Input",ExpressionUUID->"fb25b51c-5ad6-4931-b4b9-\
+c16d87951a0d"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", 
+   RowBox[{"Now", " ", "you", " ", "got", " ", "the", " ", "Ricci", " ", 
+    RowBox[{"tensor", "!!"}], " ", "now", " ", "the", " ", "goal", " ", "is", 
+    " ", "to", " ", "define", " ", "energy", " ", "momentum", " ", "tensor", 
+    " ", "and", " ", "equate", " ", "those", " ", "with", " ", "the", " ", 
+    "Ricci", " ", "Such", " ", "that", " ", 
+    RowBox[{"you", "'"}], "ll", " ", "get", " ", "the", " ", "first", " ", 
+    "ordered", " ", "term", " ", "for", " ", "the", " ", "metric", " ", 
+    "tensor"}], "*)"}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{"Goal", " ", 
+     RowBox[{"is", " ", "::"}]}], ":", "  ", 
+    RowBox[{
+    "Using", " ", "the", " ", "the", " ", "metric", " ", "tensor", " ", "get",
+      " ", "the", " ", "1", "PN", " ", "Lagrangian"}]}], " ", 
+   "*)"}]}]], "Input",ExpressionUUID->"0fda4b7a-d1da-42db-a703-8ea64cc42c13"]
+},
+WindowSize->{861, 1021},
+WindowMargins->{{11, Automatic}, {Automatic, 25}},
+FrontEndVersion->"12.1 for Microsoft Windows (64-bit) (June 19, 2020)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"c99dcdec-1ed4-4df7-b584-3407ef6d2a5c"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 376, 9, 48, "Input",ExpressionUUID->"f205344b-670b-4a58-9f7f-2f98d54e3ab1"],
+Cell[937, 31, 172, 3, 48, "Input",ExpressionUUID->"03347d24-f0e0-4d7e-866c-6d7e0dc550c2"],
+Cell[1112, 36, 776, 20, 67, "Input",ExpressionUUID->"b6edb1df-dbd9-4eac-866c-fa594ea6d1d8"],
+Cell[1891, 58, 659, 19, 86, "Input",ExpressionUUID->"7975606c-30a6-4983-9d6c-810f5832c700"],
+Cell[2553, 79, 1809, 50, 257, "Input",ExpressionUUID->"f7b57fab-9519-466c-8d80-0cfb53941a42"],
+Cell[4365, 131, 6632, 177, 373, "Input",ExpressionUUID->"9eb89d42-8f46-44b5-8e72-5004f105a5a9"],
+Cell[11000, 310, 10713, 295, 276, "Input",ExpressionUUID->"59634685-9ea2-4b67-a013-88ffabfd5666"],
+Cell[21716, 607, 1206, 34, 105, "Input",ExpressionUUID->"4e591327-5f32-4ae8-bd7e-c3ae1e0de715"],
+Cell[22925, 643, 640, 19, 28, "Input",ExpressionUUID->"0595e0c1-43b7-462e-9fa6-899d9a8eae8f"],
+Cell[23568, 664, 745, 23, 28, "Input",ExpressionUUID->"4a76031c-f942-4135-b7a4-ce5d8dce1d3d"],
+Cell[24316, 689, 407, 7, 48, "Input",ExpressionUUID->"30169dce-eb77-4a6d-a949-a3cc64c1ff2f"],
+Cell[24726, 698, 371, 7, 48, "Input",ExpressionUUID->"05af00fa-f31d-424c-81c7-1abc2462ab87"],
+Cell[25100, 707, 870, 22, 67, "Input",ExpressionUUID->"3152bb0d-a13e-4fc3-9fbd-1ccea4a74696"],
+Cell[25973, 731, 829, 24, 28, "Input",ExpressionUUID->"50ba3353-0217-49af-a227-c0a318e6a403"],
+Cell[26805, 757, 9913, 287, 266, "Input",ExpressionUUID->"09c8fa62-adce-4921-9f9a-af72f00127ac"],
+Cell[36721, 1046, 55326, 1895, 265, "Input",ExpressionUUID->"c7a49fdf-f2b4-4148-992b-20c42538c280"],
+Cell[92050, 2943, 223, 6, 28, "Input",ExpressionUUID->"fb25b51c-5ad6-4931-b4b9-c16d87951a0d"],
+Cell[92276, 2951, 951, 18, 86, "Input",ExpressionUUID->"0fda4b7a-d1da-42db-a703-8ea64cc42c13"]
+}
+]
+*)
+
